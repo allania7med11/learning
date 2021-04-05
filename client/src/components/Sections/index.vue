@@ -2,6 +2,13 @@
   <div class="sections">
     <button
       class="btn bg-primary"
+      @click="updatesection('create', pageDefault)"
+    >
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      New page
+    </button>
+    <button
+      class="btn bg-primary"
       @click="updatesection('create', sectionDefault)"
     >
       <i class="fa fa-plus" aria-hidden="true"></i>
@@ -32,10 +39,16 @@ export default {
     return {
       show: false,
       sections: [],
-      sectionDefault: {
+      pageDefault: {
         type: "page",
         title: null,
         description: null,
+      },
+      sectionDefault: {
+        type: "section",
+        title: null,
+        description: null,
+        body: null
       },
       section: {},
       action: "create",

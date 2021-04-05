@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="modal"
-    ref="modal"
-    @click="updateShow"
-  >
+  <div class="modal" ref="modal" @click="updateShow">
     <div v-if="action !== 'delete'" class="card">
       <div @click="$emit('show')" class="close">
         <i class="fa fa-times"></i>
@@ -26,8 +22,23 @@
           title="description"
           required
         />
+        <template v-if="section.type==='section'">
+          <label for="fbody">Body:</label>
+          <input
+            type="text"
+            v-model="section.body"
+            id="fbody"
+            title="body"
+            required
+          />
+        </template>
+
         <div class="text-center">
-          <button v-if="action == 'create'" type="submit" class="btn bg-primary">
+          <button
+            v-if="action == 'create'"
+            type="submit"
+            class="btn bg-primary"
+          >
             Create
             <i class="fa fa-plus ml-1"></i>
           </button>
@@ -44,9 +55,9 @@
       </div>
       <form @submit="submit" class="text-center text-2xl">
         Are you sure you want to delete
-        <span class="font-bold">{{ section.title }}</span> {{section.type}}?
+        <span class="font-bold">{{ section.title }}</span> {{ section.type }}?
         <div class="text-center">
-          <button type="submit" class="btn bg-danger mt-5 text-xl" >
+          <button type="submit" class="btn bg-danger mt-5 text-xl">
             Delete
             <i class="fa fa-trash ml-1"></i>
           </button>
@@ -61,7 +72,9 @@ export default {
   props: ["show", "action", "section"],
   computed: {
     title() {
-      return this.action == "create" ? `Create new ${this.section.type}` : `Update ${this.section.type}`;
+      return this.action == "create"
+        ? `Create new ${this.section.type}`
+        : `Update ${this.section.type}`;
     },
   },
   methods: {
