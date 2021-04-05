@@ -3,7 +3,6 @@
     class="modal"
     ref="modal"
     @click="updateShow"
-    :style="{ display: show ? 'block' : 'none' }"
   >
     <div v-if="action !== 'delete'" class="card">
       <div @click="$emit('show')" class="close">

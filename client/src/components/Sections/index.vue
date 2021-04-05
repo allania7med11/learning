@@ -8,6 +8,7 @@
       New section
     </button>
     <Form
+      v-if="show"
       :show="show"
       :action="action"
       :section="section"

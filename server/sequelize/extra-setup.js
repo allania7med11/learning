@@ -1,7 +1,7 @@
 function applyExtraSetup(sequelize) {
     const { section } = sequelize.models;
-    section.hasMany(section);
-    section.belongsTo(section);
+    section.hasMany(section, { foreignKey: 'parentId'});
+    section.belongsTo(section, { foreignKey: 'parentId'});
 }
 
 module.exports = { applyExtraSetup };
