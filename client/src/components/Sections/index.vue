@@ -1,16 +1,11 @@
 <template>
   <div class="sections">
-    <button
-      class="btn bg-primary"
-      @click="updatesection('create', pageDefault)"
-    >
+    {{ sectionId }}
+    <button class="btn bg-primary" @click="updatesection('create', 'page')">
       <i class="fa fa-plus" aria-hidden="true"></i>
       New page
     </button>
-    <button
-      class="btn bg-primary"
-      @click="updatesection('create', sectionDefault)"
-    >
+    <button class="btn bg-primary" @click="updatesection('create', 'section')">
       <i class="fa fa-plus" aria-hidden="true"></i>
       New section
     </button>
@@ -39,17 +34,6 @@ export default {
     return {
       show: false,
       sections: [],
-      pageDefault: {
-        type: "page",
-        title: null,
-        description: null,
-      },
-      sectionDefault: {
-        type: "section",
-        title: null,
-        description: null,
-        body: null
-      },
       section: {},
       action: "create",
     };
@@ -57,18 +41,32 @@ export default {
   async created() {
     await this.updatesections();
   },
+  computed: {
+    sectionId() {
+      return this.$route.params.id || null;
+    },
+  },
   methods: {
+    defaultSection(type) {
+      return {
+        type: type,
+        title: null,
+        description: null,
+        body: null,
+        sectionId: this.sectionId,
+      };
+    },
     async submit(section) {
       try {
         switch (this.action) {
           case "create":
-            await api.create(section)
+            await api.create(section);
             break;
           case "update":
-            await api.update(section.id,section)
+            await api.update(section.id, section);
             break;
           case "delete":
-            await api.delete(section.id)
+            await api.delete(section.id);
             break;
         }
         await this.updatesections();
@@ -79,15 +77,16 @@ export default {
     },
     async updatesections() {
       try {
-        let response = await api.read();
+        let response = await api.read(this.sectionId);
         this.sections = response.data;
       } catch (err) {
         console.log({ err });
       }
     },
-    async updatesection(action, section) {
+    async updatesection(action, type) {
+      console.log("section",type, this.defaultSection(type), this.$route.params);
       this.action = action;
-      this.section = section;
+      this.section = this.defaultSection[type];
       this.show = !this.show;
     },
   },

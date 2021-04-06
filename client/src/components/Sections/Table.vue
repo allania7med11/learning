@@ -5,7 +5,7 @@
         <div
           v-for="(section, index) in sections"
           :key="index"
-          class="relative m-2 p-6 w-full mx-auto bg-white rounded-xl shadow-md  flex flex-col"
+          class="text-left relative m-2 p-6 w-full mx-auto bg-white rounded-xl shadow-md  flex flex-col"
         >
           <div class="absolute top-0 right-0 px-2 py-1">
             <button
@@ -21,11 +21,13 @@
               <i class="fa fa-trash"></i>
             </button>
           </div>
-          <div class="text-gray-600 flex py-2">
+          <div class="text-lg text-gray-600  flex py-2">
             {{ section.title }}
           </div>
-          <p v-if="extend !== section.id" class="text-xs text-gray-800">{{ section.description }}</p>
-          <div v-else class="text-xs text-gray-800">{{ section.body }}</div>
+          <p v-if="extend !== section.id" class="text-sm px-2 text-gray-800">
+            {{ section.description }}
+          </p>
+          <div v-else class="text-sm px-2 text-gray-800">{{ section.body }}</div>
           <button
             @click="extendUpdate(section)"
             class="text-blue-500 border-blue-700 focus:border-blue-900 focus:outline-none border-2 
@@ -66,6 +68,8 @@ export default {
         } else {
           this.extend = section.id;
         }
+      } else {
+        this.$router.push("/lectures/" + section.id);
       }
     },
     view(section) {

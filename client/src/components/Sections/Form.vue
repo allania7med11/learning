@@ -1,6 +1,8 @@
 <template>
   <div class="modal" ref="modal" @click="updateShow">
+    
     <div v-if="action !== 'delete'" class="card">
+      {{ section }}
       <div @click="$emit('show')" class="close">
         <i class="fa fa-times"></i>
       </div>
@@ -73,8 +75,8 @@ export default {
   computed: {
     title() {
       return this.action == "create"
-        ? `Create new ${this.section.type}`
-        : `Update ${this.section.type}`;
+        ? `Create new ${this.section || this.section.type}`
+        : `Update ${this.section || this.section.type}`;
     },
   },
   methods: {
