@@ -24,10 +24,10 @@
           <div class="text-lg text-gray-600  flex py-2">
             {{ section.title }}
           </div>
-          <p v-if="extend !== section.id" class="text-sm px-2 text-gray-800">
+          <p v-if="display !== section.id" class="text-sm px-2 text-gray-800">
             {{
               section.description.length > 500
-                ? section.description.slice(195) + "..."
+                ? section.description.slice(490) + "..."
                 : section.description
             }}
           </p>
@@ -35,7 +35,7 @@
             {{ section.body }}
           </div>
           <button
-            @click="extendUpdate(section)"
+            @click="displayUpdate(section)"
             class="text-blue-500 border-blue-700 focus:border-blue-900 focus:outline-none border-2 
          mt-6 inline-block whitespace-nowrap w-40 shadow-md  hover:shadow-xl rounded-lg"
           >
@@ -43,7 +43,7 @@
             <i
               class="fa px-1"
               :class="
-                extend === section.id ? 'fa-arrow-left' : 'fa-arrow-right'
+                display === section.id ? 'fa-arrow-left' : 'fa-arrow-right'
               "
               aria-hidden="true"
             ></i>
@@ -56,33 +56,21 @@
 
 <script>
 export default {
-  props: ["sections"],
+  props: ["sections","display"],
   data() {
     return {
       fields: [
         { label: "Title", value: "title" },
         { label: "Description", value: "description" },
       ],
-      extend: -1,
     };
   },
   methods: {
-    extendUpdate(section) {
-      if (section.type === "section") {
-        if (this.extend === section.id) {
-          this.extend = -1;
-        } else {
-          this.extend = section.id;
-        }
-      } else {
-        this.$router.push({ path: "/lectures/" + section.id });
-      }
-    },
     view(section) {
       if (section.type === "page") {
         return "Discover more";
       }
-      return this.extend === section.id ? "View less" : "View more";
+      return this.display === section.id ? "View less" : "View more";
     },
   },
 };
