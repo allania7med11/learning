@@ -25,15 +25,21 @@
             {{ section.title }}
           </div>
           <p v-if="extend !== section.id" class="text-sm px-2 text-gray-800">
-            {{ section.description }}
+            {{
+              section.description.length > 500
+                ? section.description.slice(195) + "..."
+                : section.description
+            }}
           </p>
-          <div v-else class="text-sm px-2 text-gray-800">{{ section.body }}</div>
+          <div v-else class="text-sm px-2 text-gray-800">
+            {{ section.body }}
+          </div>
           <button
             @click="extendUpdate(section)"
             class="text-blue-500 border-blue-700 focus:border-blue-900 focus:outline-none border-2 
-         mt-6 inline-block whitespace-nowrap w-32 shadow-md  hover:shadow-xl rounded-lg"
+         mt-6 inline-block whitespace-nowrap w-40 shadow-md  hover:shadow-xl rounded-lg"
           >
-            <span v-text="view(section)"></span>
+            <span class="px-2" v-text="view(section)"></span>
             <i
               class="fa px-1"
               :class="
@@ -69,10 +75,13 @@ export default {
           this.extend = section.id;
         }
       } else {
-        this.$router.push("/lectures/" + section.id);
+        this.$router.push({ path: "/lectures/" + section.id });
       }
     },
     view(section) {
+      if (section.type === "page") {
+        return "Discover more";
+      }
       return this.extend === section.id ? "View less" : "View more";
     },
   },

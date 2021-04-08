@@ -8,7 +8,6 @@ import router from './router'
 
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
-
 new Vue({
   router,
   render: (h) => h(App)

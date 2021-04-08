@@ -75,9 +75,14 @@ export default {
   computed: {
     title() {
       return this.action == "create"
-        ? `Create new ${this.section || this.section.type}`
-        : `Update ${this.section || this.section.type}`;
+        ? `Create new ${ this.section.type}`
+        : `Update ${this.section.type}`;
     },
+  },
+  created() {
+    debugger; // eslint-disable-line no-debugger
+
+    console.log("form",this.section)
   },
   methods: {
     submit: function(evt) {

@@ -1,11 +1,17 @@
 <template>
   <div class="sections">
     {{ sectionId }}
-    <button class="btn bg-primary" @click="updatesection('create', 'page')">
+    <button
+      class="btn bg-primary"
+      @click="updatesection('create', defaultSection('page'))"
+    >
       <i class="fa fa-plus" aria-hidden="true"></i>
       New page
     </button>
-    <button class="btn bg-primary" @click="updatesection('create', 'section')">
+    <button
+      class="btn bg-primary"
+      @click="updatesection('create', defaultSection('section'))"
+    >
       <i class="fa fa-plus" aria-hidden="true"></i>
       New section
     </button>
@@ -39,7 +45,15 @@ export default {
     };
   },
   async created() {
+    debugger; // eslint-disable-line no-debugger
+    this.section = this.defaultSection("page");
     await this.updatesections();
+  },
+  watch:{
+    async sectionId(){
+      this.section = this.defaultSection("page");
+      await this.updatesections();
+    }
   },
   computed: {
     sectionId() {
@@ -70,7 +84,7 @@ export default {
             break;
         }
         await this.updatesections();
-        this.show = !this.show;
+        this.show = false;
       } catch (err) {
         console.log({ err });
       }
@@ -78,15 +92,18 @@ export default {
     async updatesections() {
       try {
         let response = await api.read(this.sectionId);
-        this.sections = response.data;
+        if (this.sectionId === null) {
+          this.sections = response.data;
+        }else{
+          this.sections = response.data.sections;
+        }
       } catch (err) {
         console.log({ err });
       }
     },
-    async updatesection(action, type) {
-      console.log("section",type, this.defaultSection(type), this.$route.params);
+    async updatesection(action, section) {
       this.action = action;
-      this.section = this.defaultSection[type];
+      this.section = section;
       this.show = !this.show;
     },
   },
