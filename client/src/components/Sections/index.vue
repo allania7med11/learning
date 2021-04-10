@@ -12,7 +12,7 @@
       @click="extend = !extend"
       class="z-10 w-screen h-screen fixed top-0 left-0 bg-gray-500 opacity-25"
     ></div>
-    <div class="sections text-left relative" :class="margin">
+    <div class="sections text-left relative h-full" :class="margin">
       <button
         class="btn bg-primary"
         @click="updateSection('create', defaultSection('page'))"

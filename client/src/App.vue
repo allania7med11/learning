@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="h-full">
     <div id="nav" class="bg-gray-800 flex items-stretch text-white">
       <router-link class="homeLink" to="/">Home</router-link>
       <router-link class="link" to="/lectures">Lectures</router-link>

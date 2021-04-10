@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" ref="modal" @click="updateShow">
+  <div class="modal min-h-screen" ref="modal" @click="updateShow">
     
     <div v-if="action !== 'delete'" class="card">
       <div @click="$emit('show')" class="close">
