@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav" class="bg-gray-800 flex items-stretch text-white">
-      <router-link to="/">Home</router-link>
-      <router-link to="/lectures">Lectures</router-link>
+      <router-link class="homeLink" to="/">Home</router-link>
+      <router-link class="link" to="/lectures">Lectures</router-link>
     </div>
     <router-view class="mt-12" />
   </div>
@@ -41,7 +41,10 @@ body {
     background-color: rgb(52, 211, 153, 0.7);
   }
 }
-.router-link-exact-active {
+.homeLink.router-link-exact-active {
+  background-color: rgb(52, 211, 153);
+}
+.link.router-link-active {
   background-color: rgb(52, 211, 153);
 }
 </style>

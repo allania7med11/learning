@@ -8,7 +8,7 @@
           :key="index"
           :id="`section${section.id}`"
         >
-        <div class="text-left relative m-2 p-6 w-full mx-auto bg-white rounded-xl shadow-md  flex flex-col">
+        <div class="text-left relative m-2  p-6  w-full  mx-auto bg-white rounded-xl shadow-md  flex flex-col">
           <div class="absolute top-0 right-0 px-2 py-1">
             <button
               @click="$emit('click', 'update', section)"

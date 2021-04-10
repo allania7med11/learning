@@ -139,9 +139,9 @@ export default {
       this.section = section;
       this.show = !this.show;
     },
-    updateDisplay(section) {
+    updateDisplay(section,view) {
       if (section.type === "section") {
-        if (this.display === section.id) {
+        if (this.display === section.id && !view) {
           this.display = -1;
         } else {
           this.display = section.id;

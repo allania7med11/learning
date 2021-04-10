@@ -24,7 +24,7 @@
       <div v-for="(section, key) in page.sections" :key="key">
         <div
           class="py-4 hover:text-white cursor-pointer"
-          @click="$emit('updateDisplay', section)"
+          @click="$emit('updateDisplay', section, true)"
         >
           {{ key + 1 }}<span v-if="extend">.{{ section.title }}</span>
           <i v-if="section.type=='page'" class="fa fa-eye pl-1"></i>
