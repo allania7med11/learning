@@ -1,6 +1,6 @@
 <template>
   <div >
-    
+    {{ bp }}
     <Navbar
       v-if="page"
       :page="page"
@@ -8,6 +8,11 @@
       @updateDisplay="updateDisplay"
       @changeExtend="changeExtend"
     />
+    <div
+      v-if="extend && !bp.up.sm"
+      @click="extend = !extend"
+      class="z-10 w-screen h-screen fixed top-0 left-0 bg-gray-500 opacity-25"
+    ></div>
     <div class="sections text-left" :class="margin">
       <button
         class="btn bg-primary"
@@ -79,7 +84,7 @@ export default {
       return this.$route.params.id || null;
     },
     margin: function() {
-      if (this.extend) {
+      if (this.extend && this.bp.up.sm) {
         return "ml-px220";
       }
       return "ml-20";
