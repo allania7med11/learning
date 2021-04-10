@@ -1,6 +1,5 @@
 <template>
-  <div >
-    {{ bp }}
+  <div>
     <Navbar
       v-if="page"
       :page="page"
@@ -13,7 +12,7 @@
       @click="extend = !extend"
       class="z-10 w-screen h-screen fixed top-0 left-0 bg-gray-500 opacity-25"
     ></div>
-    <div class="sections text-left" :class="margin">
+    <div class="sections text-left relative" :class="margin">
       <button
         class="btn bg-primary"
         @click="updateSection('create', defaultSection('page'))"
@@ -87,7 +86,7 @@ export default {
       if (this.extend && this.bp.up.sm) {
         return "ml-px220";
       }
-      return "ml-20";
+      return "ml-14";
     },
   },
   methods: {
@@ -141,15 +140,22 @@ export default {
       this.show = !this.show;
     },
     updateDisplay(section) {
-      debugger; // eslint-disable-line no-debugger
       if (section.type === "section") {
         if (this.display === section.id) {
           this.display = -1;
         } else {
           this.display = section.id;
+          var offset = 100; // sticky nav height
+          let elm = document.getElementById(`section${section.id}`); // element you are scrolling to
+          window.scroll({
+            top: elm.offsetTop - offset,
+            left: 0,
+            behavior: "smooth",
+          });
         }
       } else {
         this.$router.push({ path: "/lectures/" + section.id });
+        window.scrollTo(0, 0);
       }
     },
   },

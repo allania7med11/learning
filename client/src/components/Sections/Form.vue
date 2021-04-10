@@ -2,7 +2,6 @@
   <div class="modal" ref="modal" @click="updateShow">
     
     <div v-if="action !== 'delete'" class="card">
-      {{ section }}
       <div @click="$emit('show')" class="close">
         <i class="fa fa-times"></i>
       </div>
@@ -99,7 +98,7 @@ export default {
 <style lang="scss" scoped>
 .modal {
   //display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
+  position: absolute; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
@@ -115,6 +114,7 @@ export default {
   z-index: 2;
   margin: auto;
   background-color: white;
+  width: 90%;
   max-width: 800px;
   padding: 30px 20px;
   border-radius: 5px;

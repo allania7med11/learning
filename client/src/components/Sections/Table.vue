@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="pb-64">
     <div class="flex justify-center">
       <div class="grid grid-cols-1 md:grid-cols-1  p-2">
+
         <div
           v-for="(section, index) in sections"
           :key="index"
-          class="text-left relative m-2 p-6 w-full mx-auto bg-white rounded-xl shadow-md  flex flex-col"
+          :id="`section${section.id}`"
         >
+        <div class="text-left relative m-2 p-6 w-full mx-auto bg-white rounded-xl shadow-md  flex flex-col">
           <div class="absolute top-0 right-0 px-2 py-1">
             <button
               @click="$emit('click', 'update', section)"
@@ -48,6 +50,7 @@
               aria-hidden="true"
             ></i>
           </button>
+        </div>
         </div>
       </div>
     </div>
