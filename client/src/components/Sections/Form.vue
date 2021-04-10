@@ -80,8 +80,6 @@ export default {
     },
   },
   created() {
-    debugger; // eslint-disable-line no-debugger
-
     console.log("form",this.section)
   },
   methods: {

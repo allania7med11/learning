@@ -1,34 +1,43 @@
 <template>
-  <div class="sections">
-    {{ sectionId }}
-    <Navbar v-if="page" :page="page" @updateDisplay="updateDisplay" />
-    <button
-      class="btn bg-primary"
-      @click="updateSection('create', defaultSection('page'))"
-    >
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      New page
-    </button>
-    <button
-      class="btn bg-primary"
-      @click="updateSection('create', defaultSection('section'))"
-    >
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      New section
-    </button>
-    <Form
-      v-if="show"
-      :show="show"
-      :action="action"
-      :section="section"
-      @show="show = !show"
-      @submit="submit"
-    />
-    <Table
-      :sections="page.sections"
-      @click="updateSection"
+  <div >
+    
+    <Navbar
+      v-if="page"
+      :page="page"
+      :extend="extend"
       @updateDisplay="updateDisplay"
+      @changeExtend="changeExtend"
     />
+    <div class="sections text-left" :class="margin">
+      <button
+        class="btn bg-primary"
+        @click="updateSection('create', defaultSection('page'))"
+      >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        New page
+      </button>
+      <button
+        class="btn bg-primary"
+        @click="updateSection('create', defaultSection('section'))"
+      >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        New section
+      </button>
+      <Form
+        v-if="show"
+        :show="show"
+        :action="action"
+        :section="section"
+        @show="show = !show"
+        @submit="submit"
+      />
+      <Table
+        :sections="page.sections"
+        :display="display"
+        @click="updateSection"
+        @updateDisplay="updateDisplay"
+      />
+    </div>
   </div>
 </template>
 
@@ -37,14 +46,17 @@ import Form from "./Form";
 import Table from "./Table";
 import Navbar from "./Navbar";
 import api from "@/apis/section";
+import bp from "@/plugins/breakpoints";
 export default {
   components: {
     Form,
     Table,
-    Navbar
+    Navbar,
   },
   data() {
     return {
+      bp,
+      extend: true,
       show: false,
       display: -1,
       section: {},
@@ -53,7 +65,6 @@ export default {
     };
   },
   async created() {
-    debugger; // eslint-disable-line no-debugger
     this.section = this.defaultSection("page");
     await this.updatePage();
   },
@@ -67,8 +78,17 @@ export default {
     sectionId() {
       return this.$route.params.id || null;
     },
+    margin: function() {
+      if (this.extend) {
+        return "ml-px220";
+      }
+      return "ml-20";
+    },
   },
   methods: {
+    changeExtend: function() {
+      this.extend = !this.extend;
+    },
     defaultSection(type) {
       return {
         type: type,
@@ -110,12 +130,13 @@ export default {
         console.log({ err });
       }
     },
-    async updateSection(action, section) {
+    updateSection(action, section) {
       this.action = action;
       this.section = section;
       this.show = !this.show;
     },
-    async updateDisplay(section) {
+    updateDisplay(section) {
+      debugger; // eslint-disable-line no-debugger
       if (section.type === "section") {
         if (this.display === section.id) {
           this.display = -1;
@@ -132,8 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 .sections {
-  margin: auto;
-  max-width: 1000px;
+  margin-left: 200px;
 }
 .sections > button {
   margin-top: 20px;

@@ -1,64 +1,52 @@
 <template>
-  <div class="bg-gray-200 relative">
-    <div
-      class="h-full text-sm bg-gray-800 whitespace-nowrap absolute top-0 left-0 flex flex-col pl-2 pb-4 nav"
-    >
+  <div
+    :class="extend ? 'w-px220' : 'w-10'"
+    class="Z-20 text-left h-screen text-xl bg-gray-800 whitespace-nowrap fixed top-12 left-0 flex flex-col pl-4 pb-4  text-gray-300"
+  >
+    <div>
+      <span @click="$emit('changeExtend')">
+        <i :class="extend ? 'fa fa-times' : 'fa fa-bars'"></i>
+      </span>
+    </div>
+    <div v-if="$route.params.id" class="text-xl space-x-5 py-1 flex">
       <div
-        class="flex items-center hover:text-white text-gray-300 text-xs space-x-5 py-1"
+        class="hover:text-white cursor-pointer"
+        @click="$emit('updateDisplay', parent)"
       >
-        <div>
-          <router-link to="/">
-            <svg
-              class="h-6 w-6 inline"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </router-link>
-        </div>
-        <div>
-          <div>{{ page.title }}</div>
-        </div>
+        <i class="fa fa-arrow-circle-o-left"></i>
       </div>
-      <hr />
-      <div class="max-h-screen overflow-y-auto divide-y divide-gray-600">
+      <div v-if="extend">
+        <div>{{ page.title }}</div>
+      </div>
+    </div>
+    <hr />
+    <div class="max-h-screen pt-2 overflow-y-auto divide-y divide-gray-600">
+      <div v-for="(section, key) in page.sections" :key="key">
         <div
-          v-for="(section, key) in page.sections"
-          :key="key"
-          class="hover:text-white text-gray-300"
+          class="py-4 hover:text-white cursor-pointer"
+          @click="$emit('updateDisplay', section)"
         >
-          <div class="py-4" @click="$emit('updateDisplay', section)">
-              {{ key + 1 }}.{{ section.title }}
-          </div>
+          {{ key + 1 }}<span v-if="extend">.{{ section.title }}</span>
         </div>
       </div>
-      <hr />
     </div>
-    <div class="content">
-      <Nuxt />
-    </div>
+    <hr />
   </div>
 </template>
 <script>
 export default {
-  props: ["page"],
-  methods: {
-    sectionClick(section) {
-      if (section.type === "section") {
-        if (this.extend === section.id) {
-          this.extend = -1;
-        } else {
-          this.extend = section.id;
-        }
-      } else {
-        this.$router.push({ path: "/lectures/" + section.id });
-      }
+  props: ["page", "extend"],
+  computed: {
+    parent() {
+      return this.page.sectionId
+        ? {
+            type: "page",
+            id: this.page.sectionId,
+          }
+        : {
+            type: "page",
+            id: "",
+          };
     },
   },
 };
@@ -68,7 +56,7 @@ body {
   @apply bg-gray-200;
 }
 .nav {
-  width: 200px;
+  width: 220px;
 }
 .content {
   margin-left: 200px;

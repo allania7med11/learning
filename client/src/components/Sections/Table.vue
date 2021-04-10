@@ -35,7 +35,7 @@
             {{ section.body }}
           </div>
           <button
-            @click="displayUpdate(section)"
+            @click="$emit('updateDisplay', section)"
             class="text-blue-500 border-blue-700 focus:border-blue-900 focus:outline-none border-2 
          mt-6 inline-block whitespace-nowrap w-40 shadow-md  hover:shadow-xl rounded-lg"
           >

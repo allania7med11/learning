@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
+    <div id="nav" class="bg-gray-800 flex items-stretch text-white">
+      <router-link to="/">Home</router-link>
       <router-link to="/lectures">Lectures</router-link>
     </div>
-    <router-view/>
+    <router-view class="mt-12" />
   </div>
 </template>
 
 <style lang="scss">
-body{
+body {
   background-color: ghostwhite;
 }
 #app {
@@ -21,15 +21,27 @@ body{
 }
 
 #nav {
-  padding: 30px;
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 3rem;
+  width: 100vw;
+  background-color: rgba(31, 41, 55, 1);
+}
+#nav a {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  &:hover {
+    background-color: rgb(52, 211, 153, 0.7);
   }
+}
+.router-link-exact-active {
+  background-color: rgb(52, 211, 153);
 }
 </style>
