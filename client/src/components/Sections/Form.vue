@@ -1,6 +1,5 @@
 <template>
   <div class="modal min-h-screen" ref="modal" @click="updateShow">
-    
     <div v-if="action !== 'delete'" class="card">
       <div @click="$emit('show')" class="close">
         <i class="fa fa-times"></i>
@@ -23,15 +22,14 @@
           title="description"
           required
         />
-        <template v-if="section.type==='section'">
+        <template v-if="section.type === 'section'">
           <label for="fbody">Body:</label>
-          <input
-            type="text"
-            v-model="section.body"
+          <vue-editor
             id="fbody"
             title="body"
+            v-model="section.body"
             required
-          />
+          ></vue-editor>
         </template>
 
         <div class="text-center">
@@ -69,17 +67,21 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 export default {
+  components: {
+    VueEditor,
+  },
   props: ["show", "action", "section"],
   computed: {
     title() {
       return this.action == "create"
-        ? `Create new ${ this.section.type}`
+        ? `Create new ${this.section.type}`
         : `Update ${this.section.type}`;
     },
   },
   created() {
-    console.log("form",this.section)
+    console.log("form", this.section);
   },
   methods: {
     submit: function(evt) {

@@ -34,7 +34,7 @@
             }}
           </p>
           <div v-else class="text-sm px-2 text-gray-800">
-            {{ section.body }}
+            <div v-html="section.body"></div>
           </div>
           <button
             @click="$emit('updateDisplay', section)"
